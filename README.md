@@ -22,7 +22,7 @@ The main goal is to implement a form that can POST pizza orders to a server. The
 
 ## 🥷 Tasks
 
-### TASK 1 - Study the mock site
+### $TASK 1 - Study the mock site
 
 Your fully-functional **design mock** is [HERE](https://w-s10-challenge-ac3b8bb5dab3.herokuapp.com/).
 
@@ -32,7 +32,7 @@ After completing the following tasks, your app must match the functionality of t
 
 You are free to design the state of the app however you'd like, so the structure of your Redux store might not match that of the mock.
 
-### 👉 TASK 2 - Study the API using Postman
+### 👉 $TASK 2 - Study the API using Postman
 
 #### Endpoint A: [GET] `http://localhost:9009/api/pizza/history`
 
@@ -61,7 +61,7 @@ This endpoint allows you to POST a new pizza order. Here is an example of a vali
 { "message": "fullName is required" }
 ```
 
-### 👉 TASK 3 - Redux setup
+### 👉 $TASK 3 - Redux setup
 
 - Inside [store.js](./frontend/state/store.js) lives the setup of your Redux store
 - Setup is simplified due to the use of Redux Toolkit, and might look different to what you're used to
@@ -69,7 +69,7 @@ This endpoint allows you to POST a new pizza order. Here is an example of a vali
 - The Redux store is already available for use by components (see Redux Devtools)
 - Plug in your own reducer(s) as you build them in the following tasks, see example
 
-### 👉 TASK 4 - Track the history of orders using Redux
+### 👉 $TASK 4 - Track the history of orders using Redux
 
 - Use Endpoint A to GET the history of orders from the server
 - Render the orders in [OrderList.js](./frontend/components/OrderList.js)
