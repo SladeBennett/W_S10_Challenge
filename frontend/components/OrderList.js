@@ -32,7 +32,7 @@ export default function OrderList() {
               return (
                 <li key={pz.id}>
                   <div>
-                    {pz.customer} ordered a size {pz.size} with {pz.toppings} toppings
+                    {pz.customer} ordered a size {pz.size} with {pz.toppings ? pz.toppings.length : 'no'} toppings
                   </div>
                 </li>
               )
