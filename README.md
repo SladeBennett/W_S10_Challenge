@@ -76,7 +76,7 @@ This endpoint allows you to POST a new pizza order. Here is an example of a vali
 
 ❗ Make sure all readable texts match those of the prototype
 
-### 👉 TASK 5 - Track the size filter using Redux
+### 👉 $TASK 5 - Track the size filter using Redux
 
 - The default value of this state is "All"
 - Possible values for this state are "All", "L", "M" and "S"

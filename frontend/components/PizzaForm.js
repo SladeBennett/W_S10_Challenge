@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useReducer } from 'react'
+import { useCreateOrderMutation } from '../state/pizzasApi'
 
-const initialFormState = { // suggested
+const CHANGE_INPUT = 'CHANGE_INPUT'
+const RESET_FORM = 'RESET_FORM'
+
+const initialFormState = {
   fullName: '',
   size: '',
   '1': false,
@@ -10,14 +14,57 @@ const initialFormState = { // suggested
   '5': false,
 }
 
-export default function PizzaForm() {
-  return (
-    <form>
-      <h2>Pizza Form</h2>
-      {true && <div className='pending'>Order in progress...</div>}
-      {true && <div className='failure'>Order failed: fullName is required</div>}
+const reducer = (state, action) => {
+  switch (action.type) {
+    case CHANGE_INPUT: {
+      const { name, value } = action.payload
+      return { ...state, [name]: value }
+    }
+    case RESET_FORM:
+      return {
+        fullName: '',
+        size: '',
+        '1': false,
+        '2': false,
+        '3': false,
+        '4': false,
+        '5': false,
+      }
+      default:
+        return state
+  }
+}
 
-      <div className="input-group">
+export default function PizzaForm() {
+  const [state, dispatch] = useReducer(reducer, initialFormState)
+  const [createOrder, { error: creationError, isLoading: creatingOrder }] = useCreateOrderMutation()
+  const onChange = ({ target: { name, value } }) => {
+    dispatch({ type: CHANGE_INPUT, payload: { name, value } })
+  }
+  const resetForm = () => {
+    dispatch({ type: RESET_FORM })
+  }
+  const onNewOrder = evt => {
+    evt.preventDefault()
+    const { fullName, size, } = state
+    createOrder({ fullName, size })
+      .unwrap()
+      .then(data => {
+        console.log(data)
+        resetForm()
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  return (
+    <form onSubmit={onNewOrder}>
+      <h2>Pizza Form</h2>
+      {creatingOrder && <div className='pending'>Order in progress...</div>}
+      {creationError && <div className='failure'>Order failed: fullName is required</div>}
+
+      <div className="input-group" onChange={onChange}>
         <div>
           <label htmlFor="fullName">Full Name</label><br />
           <input
@@ -30,7 +77,7 @@ export default function PizzaForm() {
         </div>
       </div>
 
-      <div className="input-group">
+      <div className="input-group" onChange={onChange}>
         <div>
           <label htmlFor="size">Size</label><br />
           <select data-testid="sizeSelect" id="size" name="size">

@@ -1,6 +1,5 @@
 import React from 'react'
 import { useGetOrdersQuery } from '../state/pizzasApi'
-
 import { useSelector, useDispatch } from 'react-redux'
 import { setSize } from '../state/ordersSlice'
 
@@ -9,11 +8,8 @@ export default function OrderList() {
   const currentSize = useSelector(st => st.filters.size)
   const dispatch = useDispatch()
 
-
   const {
     data: orders,
-    isLoading: gettingOrders,
-    isFetching: refreshingOrders
   } = useGetOrdersQuery()
 
   const handleClick = evt => {
@@ -36,7 +32,7 @@ export default function OrderList() {
               return (
                 <li key={pz.id}>
                   <div>
-                    {pz.customer} ordered a size {pz.size} with {pz.toppings.length} toppings
+                    {pz.customer} ordered a size {pz.size} with {pz.toppings} toppings
                   </div>
                 </li>
               )

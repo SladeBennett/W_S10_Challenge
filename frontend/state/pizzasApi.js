@@ -9,10 +9,18 @@ export const pizzasApi = createApi({
             query: () => 'history',
             providesTags: ['Orders']
         }),
+        createOrder: builder.mutation({
+            query: order => ({
+                url: 'order',
+                method: 'POST',
+                body: order
+            }),
+            invalidatesTags: ['Orders']
+        })
 
     })
 })
 
 export const {
-    useGetOrdersQuery
+    useGetOrdersQuery, useCreateOrderMutation
 } = pizzasApi

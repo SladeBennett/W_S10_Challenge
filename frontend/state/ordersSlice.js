@@ -12,21 +12,3 @@ const slice = createSlice({
 
 export default slice.reducer
 export const { setSize } = slice.actions
-
-
-
-
-
-
-
-
-
-
-
-// const initialState = {
-//     size: 'All'
-//   }
-  
-//   export const orderReducer = (state = initialState) => {
-//     return state
-//   }
