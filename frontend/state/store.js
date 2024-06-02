@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { pizzasApi } from './pizzasApi'
-import { orderReducer } from '../components/OrderList'
+import reducer from './ordersSlice'
+
 
 export const resetStore = () => configureStore({
   reducer: {
-    filters: orderReducer,
+    filters: reducer,
     // add your reducer(s) here
     [pizzasApi.reducerPath]: pizzasApi.reducer,
   },
