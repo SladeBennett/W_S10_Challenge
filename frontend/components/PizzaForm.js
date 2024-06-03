@@ -2,6 +2,7 @@ import React, { useReducer } from 'react'
 import { useCreateOrderMutation } from '../state/pizzasApi'
 import { type } from '@testing-library/user-event/dist/cjs/utility/type.js'
 
+
 const CHANGE_INPUT = 'CHANGE_INPUT'
 const RESET_FORM = 'RESET_FORM'
 const CHANGE_CHECKED = 'CHANGE_CHECKED'
@@ -27,15 +28,7 @@ const reducer = (state, action) => {
       return { ...state, [name]: value }
     }
     case RESET_FORM:
-      return {
-        fullName: '',
-        size: '',
-        '1': false,
-        '2': false,
-        '3': false,
-        '4': false,
-        '5': false,
-      }
+      return initialFormState
       default:
         return state
   }
@@ -51,20 +44,20 @@ export default function PizzaForm() {
 
   const onToggle = ({ target: { name, checked } }) => {
     dispatch({ type: CHANGE_CHECKED, payload: { name, checked } })
-    console.log(name, checked)
   }
-  
+
   const resetForm = () => {
     dispatch({ type: RESET_FORM })
   }
 
   const onNewOrder = evt => {
     evt.preventDefault()
-    const { fullName, size } = state
-    createOrder({ fullName, size })
+    const { fullName, size, ...toppings } = state
+    let theAnswer = Object.keys(toppings).filter(tp => toppings[tp] == true)
+    createOrder({ fullName, size, "toppings": theAnswer })
       .unwrap()
       .then(data => {
-        console.log(data)
+        console.log(data.message)
         resetForm()
       })
       .catch(err => {
@@ -105,22 +98,22 @@ export default function PizzaForm() {
 
       <div className="input-group">
         <label>
-          <input data-testid="checkPepperoni" name="1" type="checkbox" onChange={onToggle}/>
+          <input data-testid="checkPepperoni" name="1" type="checkbox" onChange={onToggle} />
           Pepperoni<br /></label>
         <label>
-          <input data-testid="checkGreenpeppers" name="2" type="checkbox" onChange={onToggle}/>
+          <input data-testid="checkGreenpeppers" name="2" type="checkbox" onChange={onToggle} />
           Green Peppers<br /></label>
         <label>
-          <input data-testid="checkPineapple" name="3" type="checkbox" onChange={onToggle}/>
+          <input data-testid="checkPineapple" name="3" type="checkbox" onChange={onToggle} />
           Pineapple<br /></label>
         <label>
-          <input data-testid="checkMushrooms" name="4" type="checkbox" onChange={onToggle}/>
+          <input data-testid="checkMushrooms" name="4" type="checkbox" onChange={onToggle} />
           Mushrooms<br /></label>
         <label>
-          <input data-testid="checkHam" name="5" type="checkbox" onChange={onToggle}/>
+          <input data-testid="checkHam" name="5" type="checkbox" onChange={onToggle} />
           Ham<br /></label>
       </div>
-      <input data-testid="submit" type="submit" />
+      <input data-testid="submit" type="submit" onSubmit={onNewOrder}/>
     </form>
   )
 }

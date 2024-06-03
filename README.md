@@ -82,7 +82,7 @@ This endpoint allows you to POST a new pizza order. Here is an example of a vali
 - Possible values for this state are "All", "L", "M" and "S"
 - Clicking the different buttons in [OrderList.js](./frontend/components/OrderList.js) updates this state
 
-### 👉 TASK 6 - Create a new pizza order
+### 👉 $TASK 6 - Create a new pizza order
 
 - Use Endpoint B to POST a new order to the server
 - Complete the form in [PizzaForm.js](./frontend/components/PizzaForm.js)
