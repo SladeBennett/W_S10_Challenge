@@ -28,9 +28,17 @@ const reducer = (state, action) => {
       return { ...state, [name]: value }
     }
     case RESET_FORM:
-      return initialFormState
-      default:
-        return state
+      return {
+        fullName: '',
+        size: '',
+        '1': false,
+        '2': false,
+        '3': false,
+        '4': false,
+        '5': false,
+      }
+    default:
+      return { ...state }
   }
 }
 
@@ -65,16 +73,19 @@ export default function PizzaForm() {
       })
   }
 
+
   return (
     <form onSubmit={onNewOrder}>
       <h2>Pizza Form</h2>
       {creatingOrder && <div className='pending'>Order in progress...</div>}
-      {creationError && <div className='failure'>Order failed: fullName is required</div>}
+      {creationError && <div className='failure'>Order failed: {creationError.data.message}</div>}
 
-      <div className="input-group" onChange={onChange}>
+      <div className="input-group" >
         <div>
           <label htmlFor="fullName">Full Name</label><br />
           <input
+            onChange={onChange}
+            value={state.fullName}
             data-testid="fullNameInput"
             id="fullName"
             name="fullName"
@@ -84,10 +95,10 @@ export default function PizzaForm() {
         </div>
       </div>
 
-      <div className="input-group" onChange={onChange}>
+      <div className="input-group">
         <div>
           <label htmlFor="size">Size</label><br />
-          <select data-testid="sizeSelect" id="size" name="size">
+          <select data-testid="sizeSelect" id="size" name="size" value={state.size} onChange={onChange}>
             <option value="">----Choose size----</option>
             <option value="S">Small</option>
             <option value="M">Medium</option>
@@ -98,22 +109,22 @@ export default function PizzaForm() {
 
       <div className="input-group">
         <label>
-          <input data-testid="checkPepperoni" name="1" type="checkbox" onChange={onToggle} />
+          <input data-testid="checkPepperoni" name="1" type="checkbox" onChange={onToggle} checked={state['1']}/>
           Pepperoni<br /></label>
         <label>
-          <input data-testid="checkGreenpeppers" name="2" type="checkbox" onChange={onToggle} />
+          <input data-testid="checkGreenpeppers" name="2" type="checkbox" onChange={onToggle} checked={state['2']}/>
           Green Peppers<br /></label>
         <label>
-          <input data-testid="checkPineapple" name="3" type="checkbox" onChange={onToggle} />
+          <input data-testid="checkPineapple" name="3" type="checkbox" onChange={onToggle} checked={state['3']}/>
           Pineapple<br /></label>
         <label>
-          <input data-testid="checkMushrooms" name="4" type="checkbox" onChange={onToggle} />
+          <input data-testid="checkMushrooms" name="4" type="checkbox" onChange={onToggle} checked={state['4']}/>
           Mushrooms<br /></label>
         <label>
-          <input data-testid="checkHam" name="5" type="checkbox" onChange={onToggle} />
+          <input data-testid="checkHam" name="5" type="checkbox" onChange={onToggle} checked={state['5']}/>
           Ham<br /></label>
       </div>
-      <input data-testid="submit" type="submit" onSubmit={onNewOrder}/>
+      <input data-testid="submit" type="submit" onSubmit={onNewOrder} />
     </form>
   )
 }
